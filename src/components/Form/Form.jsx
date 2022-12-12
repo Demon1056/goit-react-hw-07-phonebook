@@ -15,7 +15,7 @@ const schema = yup.object().shape({
     .required('Sorry, but Name is a required field'),
   number: yup
     .string()
-    .length(9, ' Sorry, but the phone number should consist of 9 characters')
+    .length(12, ' Sorry, but the phone number should consist of 12 characters')
     .matches(phoneRegExp, 'Phone number is not valid')
     .required('Sorry, but Number is a required field'),
 });
