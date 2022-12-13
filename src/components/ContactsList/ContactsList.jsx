@@ -1,19 +1,19 @@
 import PropTypes from 'prop-types';
 import { ListItem } from './ContactsListStyled';
-import { deleteContact } from 'components/redux/myContactSlise';
-import { useDispatch } from 'react-redux';
+// import { deleteContact } from 'components/redux/myContactSlise';
+// import { useDispatch } from 'react-redux';
 
 export const ContactList = ({ data }) => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   return (
     <ul>
       {data.map(item => (
         <ListItem key={item.id}>
-          {`${item.name} : ${item.number}`}
+          {`${item.name} : ${item.phone}`}
           <button
-            onClick={() => {
-              return dispatch(deleteContact(item));
-            }}
+          // onClick={() => {
+          //   return dispatch(deleteContact(item));
+          // }}
           >
             Delete
           </button>

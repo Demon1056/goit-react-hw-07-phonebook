@@ -1,21 +1,19 @@
 import axios from 'axios';
 
-const BASEURLD = `https://63979be177359127a03bf696.mockapi.io/contacts`;
-
+axios.defaults.baseURL = 'https://63979be177359127a03bf696.mockapi.io';
 
 export async function getContacts(signal) {
-    try {
-        const response = await axios.get(BASEURLD, {
-            signal: signal,
-        });
-        return response
+  try {
+    const response = await axios.get('/contacts', {
+      signal: signal,
+    });
+    return response;
+  } catch (error) {
+    if (axios.isCancel(error)) {
+      return [];
     }
-    catch (error) {
-        if (axios.isCancel(error)) {
-            return [];
-        }
-        throw new Error(error);
-    }
+    throw new Error(error);
+  }
 }
 
 // export async function requestSearchFilms(name, signal) {

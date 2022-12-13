@@ -1,9 +1,8 @@
-import shortid from 'shortid';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import { FormStyles, FieldStyles, ErrorMessageStyled } from './Form.styled';
-import { addContact } from 'components/redux/myContactSlise';
-import { useSelector, useDispatch } from 'react-redux';
+import { addContact } from 'components/redux/operations';
+import { useDispatch } from 'react-redux';
 
 const phoneRegExp =
   /^\(?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/;
@@ -21,30 +20,25 @@ const schema = yup.object().shape({
 });
 
 export const ContactForm = () => {
-  const contacts = useSelector(state => state.myContacts.contacts);
-  const dispatch = useDispatch();
-  const generId = () => shortid.generate();
-  const createNewContact = e => {
-    const id = generId();
-    return { ...e, id };
-  };
+  // const contacts = useSelector(state => state.myContacts.contacts);
+  // const dispatch = useDispatch();
 
-  const updateContacts = (values, actions) => {
-    if (contacts.items.find(({ name }) => name === values.name)) {
-      alert(`${values.name} is already in contacts`);
-      actions.resetForm();
-      return;
-    }
-    {
-      const newContact = createNewContact(values);
-      dispatch(addContact(newContact));
-      actions.resetForm();
-    }
-  };
+  // const updateContacts = (values, actions) => {
+  //   if (contacts.items.find(({ name }) => name === values.name)) {
+  //     alert(`${values.name} is already in contacts`);
+  //     actions.resetForm();
+  //     return;
+  //   }
+  //   {
+  //     const newContact = createNewContact(values);
+  //     dispatch(addContact(newContact));
+  //     actions.resetForm();
+  //   }
+  // };
   return (
     <Formik
       initialValues={{ name: '', number: '' }}
-      onSubmit={(e, actions) => updateContacts(e, actions)}
+      // onSubmit={(e, actions) => updateContacts(e, actions)}
       validationSchema={schema}
     >
       <FormStyles>

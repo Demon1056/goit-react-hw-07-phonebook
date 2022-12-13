@@ -3,10 +3,17 @@ import { ContactList } from './ContactsList/ContactsList';
 import { Filter } from './Filter/Filter';
 import { PhoneBook, InformationArea } from './App.styled';
 import { useSelector } from 'react-redux';
-import { getContacts } from 'Api';
-
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { fetchContacts } from './redux/operations';
+// import { getContacts } from 'Api';
 
 export const App = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
   const contacts = useSelector(state => state.myContacts.contacts.items);
   const filter = useSelector(state => state.filter);
 
@@ -15,11 +22,12 @@ export const App = () => {
       name.toUpperCase().includes(filter.toUpperCase())
     );
   };
-  const getC = async () => {
-    const contacts = await getContacts()
-    console.log(contacts);
-  }
-  getC()
+  // const getC = async () => {
+  //   const contacts = await getContacts()
+  //   console.log(contacts);
+  // }
+  // getC()
+  console.log('fuck you to');
   return (
     <PhoneBook>
       <ContactForm />
