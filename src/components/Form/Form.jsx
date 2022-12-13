@@ -2,7 +2,7 @@ import { Formik } from 'formik';
 import * as yup from 'yup';
 import { FormStyles, FieldStyles, ErrorMessageStyled } from './Form.styled';
 import { addContact } from 'components/redux/operations';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 const phoneRegExp =
   /^\(?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/;
@@ -12,7 +12,7 @@ const schema = yup.object().shape({
     .string()
     .matches(nameValid, 'Name can only contain Latin letters.')
     .required('Sorry, but Name is a required field'),
-  number: yup
+  phone: yup
     .string()
     .length(12, ' Sorry, but the phone number should consist of 12 characters')
     .matches(phoneRegExp, 'Phone number is not valid')
@@ -20,25 +20,24 @@ const schema = yup.object().shape({
 });
 
 export const ContactForm = () => {
-  // const contacts = useSelector(state => state.myContacts.contacts);
-  // const dispatch = useDispatch();
+  const contacts = useSelector(state => state.myContacts.contacts.items);
 
-  // const updateContacts = (values, actions) => {
-  //   if (contacts.items.find(({ name }) => name === values.name)) {
-  //     alert(`${values.name} is already in contacts`);
-  //     actions.resetForm();
-  //     return;
-  //   }
-  //   {
-  //     const newContact = createNewContact(values);
-  //     dispatch(addContact(newContact));
-  //     actions.resetForm();
-  //   }
-  // };
+  const dispatch = useDispatch();
+
+  const updateContacts = (values, actions) => {
+    console.log(values);
+    if (contacts.find(({ name }) => name === values.name)) {
+      alert(`${values.name} is already in contacts`);
+      actions.resetForm();
+      return;
+    }
+    dispatch(addContact(values));
+    actions.resetForm();
+  };
   return (
     <Formik
-      initialValues={{ name: '', number: '' }}
-      // onSubmit={(e, actions) => updateContacts(e, actions)}
+      initialValues={{ name: '', phone: '' }}
+      onSubmit={(e, actions) => updateContacts(e, actions)}
       validationSchema={schema}
     >
       <FormStyles>
@@ -49,9 +48,9 @@ export const ContactForm = () => {
         <ErrorMessageStyled name="name" component="span" />
         <label>
           Number
-          <FieldStyles type="tel" name="number" />
+          <FieldStyles type="tel" name="phone" />
         </label>
-        <ErrorMessageStyled name="number" component="span" />
+        <ErrorMessageStyled name="phone" component="span" />
         <button type="submit">Add contact</button>
       </FormStyles>
     </Formik>

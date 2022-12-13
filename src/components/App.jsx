@@ -6,7 +6,6 @@ import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchContacts } from './redux/operations';
-// import { getContacts } from 'Api';
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -22,12 +21,6 @@ export const App = () => {
       name.toUpperCase().includes(filter.toUpperCase())
     );
   };
-  // const getC = async () => {
-  //   const contacts = await getContacts()
-  //   console.log(contacts);
-  // }
-  // getC()
-  console.log('fuck you to');
   return (
     <PhoneBook>
       <ContactForm />
