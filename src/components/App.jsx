@@ -3,9 +3,11 @@ import { ContactList } from './ContactsList/ContactsList';
 import { Filter } from './Filter/Filter';
 import { PhoneBook, InformationArea } from './App.styled';
 import { useSelector } from 'react-redux';
+import { getContacts } from 'Api';
+
 
 export const App = () => {
-  const contacts = useSelector(state => state.myContacts.contacts);
+  const contacts = useSelector(state => state.myContacts.contacts.items);
   const filter = useSelector(state => state.filter);
 
   const filterContacts = () => {
@@ -13,7 +15,11 @@ export const App = () => {
       name.toUpperCase().includes(filter.toUpperCase())
     );
   };
-
+  const getC = async () => {
+    const contacts = await getContacts()
+    console.log(contacts);
+  }
+  getC()
   return (
     <PhoneBook>
       <ContactForm />

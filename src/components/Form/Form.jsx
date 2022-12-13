@@ -30,7 +30,7 @@ export const ContactForm = () => {
   };
 
   const updateContacts = (values, actions) => {
-    if (contacts.find(({ name }) => name === values.name)) {
+    if (contacts.items.find(({ name }) => name === values.name)) {
       alert(`${values.name} is already in contacts`);
       actions.resetForm();
       return;
