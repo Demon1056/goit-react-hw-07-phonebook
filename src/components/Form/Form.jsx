@@ -1,8 +1,10 @@
 import { Formik } from 'formik';
 import * as yup from 'yup';
+import { useSelector, useDispatch } from 'react-redux';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { FormStyles, FieldStyles, ErrorMessageStyled } from './Form.styled';
 import { addContact } from 'components/redux/operations';
-import { useSelector, useDispatch } from 'react-redux';
+import { getContacts } from 'components/redux/selectors';
 
 const phoneRegExp =
   /^\(?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/;
@@ -20,20 +22,20 @@ const schema = yup.object().shape({
 });
 
 export const ContactForm = () => {
-  const contacts = useSelector(state => state.myContacts.contacts.items);
+  const contacts = useSelector(getContacts);
 
   const dispatch = useDispatch();
 
   const updateContacts = (values, actions) => {
-    console.log(values);
     if (contacts.find(({ name }) => name === values.name)) {
-      alert(`${values.name} is already in contacts`);
+      Notify.warning(`${values.name} is already in contacts`);
       actions.resetForm();
       return;
     }
     dispatch(addContact(values));
     actions.resetForm();
   };
+
   return (
     <Formik
       initialValues={{ name: '', phone: '' }}
